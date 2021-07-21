@@ -354,7 +354,6 @@ int reconfigureRTU(int deviceId, int modbusBaudSetting,  int chanModeSetting[])
 int setModbusValues(int targetChan, int chanLogicLevel, int chanFreq, int chanPulses, int modeSwitch)
 {  
 
-
 	int wRegId;
 	int wStartRegId;
 	int wStartReg;

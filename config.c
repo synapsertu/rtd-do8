@@ -39,12 +39,12 @@ int readConfig()
    	dataSource[deviceId].deviceType  = RTU_DO8;
 
     // These values will be overwrtten by cmd line options
-	dataSource[deviceId].modbusId    = 1;
-	dataSource[deviceId].baudRate    = 19200;
-	dataSource[deviceId].dataBits    = 8;		
+	dataSource[deviceId].modbusId = 1;
+	dataSource[deviceId].baudRate = 19200;
+	dataSource[deviceId].dataBits = 8;		
+	dataSource[deviceId].stopBit  = 1;
+	dataSource[deviceId].timeout  = 5;
 	strcpy(dataSource[deviceId].parity,"None");
-	dataSource[deviceId].stopBit     = 1;
-	dataSource[deviceId].timeout     = 5;
 	strcpy(dataSource[deviceId].interface, "/dev/ttyUSB0");
 	
 	
@@ -91,9 +91,6 @@ int readConfig()
 	dataSource[deviceId].regAddress[22] =23 ;	dataSource[deviceId].regType[22] =1  ;		// Pulse Count Channel 7 
 	dataSource[deviceId].regAddress[23] =24 ;	dataSource[deviceId].regType[23] =1  ;		// Pulse Frequency Period Setting Channel 8
 	dataSource[deviceId].regAddress[24] =25 ;	dataSource[deviceId].regType[24] =1  ;		// Pulse Count Channel 8
-	
-	
-
 
 }
 

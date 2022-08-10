@@ -76,8 +76,7 @@ int getModbusValues()
 
 		// Get RTU Specific channel config by making a read from the RTU module ahead of the main request
 		// Defined in digout.c
-		getChanConfig(mb, deviceId);
-
+		
 		/*   Optimise modbus register reads, 
 
 			 e.g. here's our map

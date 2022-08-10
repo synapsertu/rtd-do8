@@ -60,13 +60,9 @@ int main(int argc, char *argv[])
 	int opt;
 	int debugMode = 0;
 	int configWrite = 0;
-	int chanModeSetting[9] = {0};
 	int modbusBaudSetting = 0;
 	int chanLogicLevel = 0;
 	int targetChan = 0;
-	int chanFreq = 0;
-	int chanPulses = 0;
-	int modeSwitch = 0; // 1 = Logic Level | 2 = Frequency Continious | 3 = Frequency Fixed Pulses
 
 	// Load Config, this is
 	readConfig();
@@ -112,54 +108,6 @@ int main(int argc, char *argv[])
 			displayType = HUMANREAD;
 			configWrite = 1;
 			break;
-		case '1': // Configure RTU Channel 1 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[1] = atoi(optarg);
-			}
-			break;
-		case '2': // Configure RTU Channel 2 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[2] = atoi(optarg);
-			}
-			break;
-		case '3': // Configure RTU Channel 3 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[3] = atoi(optarg);
-			}
-			break;
-		case '4': // Configure RTU Channel 4 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[4] = atoi(optarg);
-			}
-			break;
-		case '5': // Configure RTU Channel 5 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[5] = atoi(optarg);
-			}
-			break;
-		case '6': // Configure RTU Channel 6 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[6] = atoi(optarg);
-			}
-			break;
-		case '7': // Configure RTU Channel 7 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[7] = atoi(optarg);
-			}
-			break;
-		case '8': // Configure RTU Channel 8 Mode setting
-			if (atoi(optarg) < 4 && atoi(optarg) > 0)
-			{
-				chanModeSetting[8] = atoi(optarg);
-			}
-			break;
 		case 'o':
 			if (atoi(optarg) < 9 && atoi(optarg) > 0)
 			{
@@ -170,23 +118,7 @@ int main(int argc, char *argv[])
 			if (atoi(optarg) < 2)
 			{
 				chanLogicLevel = atoi(optarg);
-				modeSwitch = 1;
 			}
-			break;
-		case 'f': // Pulse frequency output mode - this sets the pulse period
-			if (atoi(optarg) < 1000)
-			{
-				chanFreq = atoi(optarg);
-				// don't over-write -n setting of modeSwitch
-				if (modeSwitch == 0)
-				{
-					modeSwitch = 2;
-				}
-			}
-			break;
-		case 'n': // Pulse frequency output mode - this sets the number of pulses to output
-			chanPulses = atoi(optarg);
-			modeSwitch = 3;
 			break;
 		case 'm': // Set value for RTU Baud Rate register  (use in conjunction with -w flag)
 			if (atoi(optarg) < 6 && atoi(optarg) > 0)
@@ -195,8 +127,8 @@ int main(int argc, char *argv[])
 			}
 			break;
 		case '?':
-			printf("Synapse RTU-DI8 Reader - v1.0\n\n");
-			printf("%s [-h|j|c] [-a] [-b] [-p] [-o] [-s] [-f] [-n] [-1] [-2] [-3] [-4] [-5] [-6] [-7] [-8] [-m] [-w] [-d]\n\n", argv[0]);
+			printf("Synapse RTU-DO8 tool - v1.1\n\n");
+			printf("%s [-h|j|c] [-a] [-b] [-p] [-o] [-s] [-m] [-w] [-d]\n\n", argv[0]);
 			printf("Syntax :\n\n");
 			printf("-h = Human readable output (default)\n");
 			printf("-j = JSON readable output\n");
@@ -209,17 +141,6 @@ int main(int argc, char *argv[])
 			printf("-o = Output channel to set (1|2|3|4|5|6|7|8) ");
 			printf("\n");
 			printf("-s = Set logic on/off state (0|1) \n");
-			printf("-f = Set period of pulse frequency output  e.g. 100 = 10Hz  or  0 = off \n");
-			printf("-n = Select number of pulses for fixed pulse count output\n");
-			printf("\n");
-			printf("-1 = Set Channel 1 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
-			printf("-2 = Set Channel 2 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
-			printf("-3 = Set Channel 3 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
-			printf("-4 = Set Channel 4 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
-			printf("-5 = Set Channel 5 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
-			printf("-6 = Set Channel 6 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
-			printf("-7 = Set Channel 7 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
-			printf("-8 = Set Channel 8 mode register (1=Logic Level|2=Pulse Freq Continuous|3=Pulse Freq Num Pulses) - default=Logic Level\n");
 			printf("\n");
 			printf("-m = Set value for RTU Baud Rate register (1=9600/2=14400/3=19200/4=38400/5=57600)  \n");
 			printf("\n");
@@ -228,15 +149,9 @@ int main(int argc, char *argv[])
 			printf("-d = debug mode\n");
 			printf("\n");
 			printf("Examples :\n");
-			printf("Set output channel 3 to on                                                 :  %s -a 1 -b 19200 -p /dev/ttyS0 -o 3 -s 1 \n", argv[0]);
-			printf("Set output channel 3 to off                                                :  %s -a 1 -b 19200 -p /dev/ttyS0 -o 3 -s 0 \n", argv[0]);
+			printf("Set output channel 3 to on       :  %s -a 1 -b 19200 -p /dev/ttyAMA0 -o 3 -s 1 \n", argv[0]);
+			printf("Set output channel 3 to off      :  %s -a 1 -b 19200 -p /dev/ttyAMA0 -o 3 -s 0 \n", argv[0]);
 			printf("\n");
-			printf("Set output channel 1 to pulse frequency 10Hz (free running )               :  %s -a 1 -b 19200 -p /dev/ttyS0 -o 1 -f 100 \n", argv[0]);
-			printf("Set output channel 1 to pulse frequency 0Hz (off)                          :  %s -a 1 -b 19200 -p /dev/ttyS0 -o 1 -f 0 \n", argv[0]);
-			printf("\n");
-			printf("Set output channel 1 to pulse frequency 10Hz for 50 pulses only )          :  %s -a 1 -b 19200 -p /dev/ttyS0 -o 1 -f 100 -n 50 \n", argv[0]);
-			printf("\n");
-			printf("Reconfigure RTU channel 1 into pulse frequency output mode                 :  %s -a 3 -p /dev/ttyS0 -1 2 -w\n", argv[0]);
 			printf("\n");
 			exit(1);
 			break;
@@ -245,13 +160,13 @@ int main(int argc, char *argv[])
 
 	if (displayType == HUMANREAD)
 	{
-		printf("\nSynapse RTU-DO8 Reader - v1.0\n\n");
+		printf("\nSynapse RTU-DO8 Tool - v1.1\n\n");
 	}
 
 	// Reconfigure RTU settings
 	if (configWrite == 1)
 	{
-		reconfigureRTU(deviceId, modbusBaudSetting, chanModeSetting);
+		reconfigureRTU(deviceId, modbusBaudSetting);
 		exit(0);
 	}
 
@@ -260,10 +175,10 @@ int main(int argc, char *argv[])
 		printConfig();
 	}
 
-	// Set ouput channel operation according to command line option 
+	// A vaild target channel has been specified so let's go and set it accordingly
 	if (targetChan > 0)
 	{
-		setModbusValues(targetChan, chanLogicLevel, chanFreq, chanPulses, modeSwitch); // only 1 device configured in demo tool
+		setModbusValues(targetChan, chanLogicLevel); // only 1 device configured in demo tool
 	}
 
 	// Read in Modbus registers to show current settings
@@ -271,6 +186,7 @@ int main(int argc, char *argv[])
 	{
 		printf("Modbus Reads...\n");
 	}
+
 	if (getModbusValues() == 0)
 	{
 		if (displayType == HUMANREAD)

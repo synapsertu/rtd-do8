@@ -60,8 +60,7 @@ typedef struct
 	int timeout;         			//  TODO : this needs configuring
 	char parity[6];      			//  none, odd, even
 	char interface[20]; 			//  /dev/ttyS0 /dev/ttyAMA0 /dev/ttyUSB100
-	int numRegisters;			//  Total number of registers enabled to scan for
-	int ChanMode[9];			//  Per-channel mode, this gives the channel setting or mode e.g.ADC this is the resolution setting for Digin this the channel mode, index 1 = Chan 1
+	int numRegisters;			//  Total number of registers enabled to scan for	
 	int regAddress[MAX_DATAPOINTS];         //  addess minus the 40000 multiier, total  max registers per device              	
 	int regType[MAX_DATAPOINTS];            //  register type e.g. 32bit integer or unsigned 16bit  
 	float value[MAX_DATAPOINTS];	        //  decoded (and then scaled) value for the register			  

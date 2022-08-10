@@ -34,7 +34,7 @@ Syntax :
 -d = debug mode
 
 Examples :
-Set output channel 3 to on       :  ./rtu-do8 -a 1 -b 19200 -p /dev/ttyS0 -o 3 -s 1
-Set output channel 3 to off      :  ./rtu-do8 -a 1 -b 19200 -p /dev/ttyS0 -o 3 -s 0
+Set output channel 3 to on       :  ./rtu-do8 -a 1 -b 19200 -p /dev/ttyAMA0 -o 3 -s 1
+Set output channel 3 to off      :  ./rtu-do8 -a 1 -b 19200 -p /dev/ttyAMA0 -o 3 -s 0
 
 ```
